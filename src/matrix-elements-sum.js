@@ -18,11 +18,11 @@ const { NotImplementedError } = require('../lib');
  */
 function getMatrixElementsSum(matrix) {
   //this costal;)
-  if (matrix.length < 2) {
-    return 0;
-  }
+  // if (matrix.length < 2) {
+  //   return 0;
+  // }
   let zeroHeigh = [];
-  let sum = [];
+  let sum = 0;
   let columnCount = matrix[0].length;
 
   for (let i = 0; i < columnCount; i++) {
@@ -32,11 +32,11 @@ function getMatrixElementsSum(matrix) {
       if (matrix[j][i] === 0 && zeroHeigh.length === 0) {
         zeroHeigh.push(i);
       } else if (matrix[j][i] !== 0 && zeroHeigh.length === 0) {
-        sum.push(matrix[j][i]);
+        sum += matrix[j][i];
       }
     }
   }
-  return sum.reduce((a, b) => a + b);
+  return sum;
 }
 
 // console.log([

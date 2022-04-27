@@ -21,15 +21,17 @@ function createDreamTeam(members) {
   if (!Array.isArray(members)) {
     return false;
   }
-  const membersName = members.filter((str) => typeof str === 'string')
+  //const membersName =
+  return members.filter((str) => typeof str === 'string')
     .map((val) => {
       const normalize = val.trim();
       return normalize[0].toUpperCase();
     })
-    .sort();
-  return membersName.reduce((acc, vl) => {
-    return acc + vl;
-  }, '')
+    .sort()
+    .join('');
+  // return membersName.reduce((acc, vl) => {
+  //   return acc + vl;
+  // }, '')
 }
 
 module.exports = {

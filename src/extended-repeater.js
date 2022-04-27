@@ -3,23 +3,54 @@ const { NotImplementedError } = require('../lib');
 /**
  * Create a repeating string based on the given parameters
  *
+ *
  * @param {String} str string to repeat
+ * @param {Object} options options object
  * @param {Object} options options object
  * @return {String} repeating string
  *
  *
+ *
  * @example
+ *
+ * repeater('STRING', { repeatTimes: 3, separator: '**',
  *
  * repeater('STRING', { repeatTimes: 3, separator: '**',
  * addition: 'PLUS', additionRepeatTimes: 3, additionSeparator: '00' })
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
+function repeater(str, options) {
+  const option = Object.assign(defaultOption, options);
+  const { repeatTimes,
+    separator,
+    addition,
+    additionRepeatTimes,
+    additionSeparator } = option;
+  const normalizeStr = String(str);
+  const nomalizeAddition = String(addition);
+  const afterStr = `${nomalizeAddition}${additionSeparator}`
+    .repeat(additionRepeatTimes);
+  normalizeAfterStr = afterStr.slice(0, afterStr.length - additionSeparator.length);
+  const newStr = `${normalizeStr}${normalizeAfterStr}${separator}`
+    .repeat(repeatTimes)
+  return newStr.slice(0, newStr.length - separator.length);
 
-function repeater(/* str, options */) {
-  // Remove line below and write your code here
-  throw new NotImplementedError('Not implemented');
 }
+
+const defaultOption = {
+  repeatTimes: 1,
+  separator: '+',
+  addition: '',
+  additionRepeatTimes: 1,
+  additionSeparator: '|'
+}
+
+// const buildStr = (num, str1, str2) => {
+//   const slicer = str1.length - str2.length;
+//   const newStr = `${str1}${str2}`.repeat(num).slice(0, slicer);
+//   return newStr;
+// }
 
 module.exports = {
   repeater
