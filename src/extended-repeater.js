@@ -29,6 +29,13 @@ function repeater(str, options) {
     additionSeparator } = option;
   const normalizeStr = String(str);
   const nomalizeAddition = String(addition);
+  // if (additionRepeatTimes < 1 ) {
+  //   return `${repeatTimes}${str}${addition}`
+  // }
+  // const afterStr = buildStr(additionRepeatTimes, nomalizeAddition, additionSeparator);
+  // const doubleStr = `${str}${afterStr}`
+  // const newStr = buildStr(repeatTimes, doubleStr, separator);
+  // return newStr;
   const afterStr = `${nomalizeAddition}${additionSeparator}`
     .repeat(additionRepeatTimes);
   normalizeAfterStr = afterStr.slice(0, afterStr.length - additionSeparator.length);
@@ -42,7 +49,7 @@ const defaultOption = {
   repeatTimes: 1,
   separator: '+',
   addition: '',
-  additionRepeatTimes: 1,
+  additionRepeatTimes: 0,
   additionSeparator: '|'
 }
 

@@ -4,28 +4,43 @@ const { NotImplementedError } = require('../lib');
 /**
  * Implement chainMaker object according to task description
  *
+ *
  */
 const chainMaker = {
+  chain: [],
+
   getLength() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    const len = this.chain.filter((val) => val !== undefined);
+    return len.length;
   },
-  addLink(/* value */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+
+  addLink(value) {
+    // console.log(value)
+    if (value === undefined) {
+      this.chain.push([`( )`]);
+      return this;
+    } else {
+      this.chain.push([`( ${value} )`]);
+      return this;
+    }
   },
-  removeLink(/* position */) {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  removeLink(position) {
+    if (typeof position !== 'number' || position > this.getLength() || !Number.isInteger(position) || position <= 0) {
+      throw new Error("You can't remove incorrect link!");
+    }
+    delete this.chain[position - 1];
+    return this;
   },
+
   reverseChain() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+    this.chain.reverse();
+    return this;
   },
+
   finishChain() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
-  },
+    const filt = this.chain.filter((val) => val !== undefined);
+    return filt.join('~~');
+  }
 };
 
 module.exports = {
