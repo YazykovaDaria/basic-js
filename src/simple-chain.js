@@ -15,7 +15,6 @@ const chainMaker = {
   },
 
   addLink(value) {
-    // console.log(value)
     if (value === undefined) {
       this.chain.push([`( )`]);
       return this;
@@ -26,10 +25,16 @@ const chainMaker = {
   },
   removeLink(position) {
     if (typeof position !== 'number' || position > this.getLength() || !Number.isInteger(position) || position <= 0) {
-      this.chain.length = 0;
+      this.chain = [];
       throw new Error("You can't remove incorrect link!");
     }
-    delete this.chain[position - 1];
+  const del =  this.chain.map((chank, i) => {
+if (i === position -1) {
+  return [];
+}
+return chank;
+    }).filter((ch) => ch.length > 0)
+    this.chain = del;
     return this;
   },
 
@@ -39,8 +44,9 @@ const chainMaker = {
   },
 
   finishChain() {
-    const filt = this.chain.filter((val) => val !== undefined);
-    this.chain.length = 0;
+    const filt = this.chain
+    //.filter((val) => val !== undefined);
+    this.chain = [];
     return filt.join('~~');
   }
 };
