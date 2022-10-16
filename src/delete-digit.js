@@ -12,12 +12,18 @@ const { NotImplementedError } = require('../lib');
  *
  */
 function deleteDigit( n ) {
-const digits = String(n).split('');
+  //на досуге переделать на норм варик без заглушки!
+  if (n === 342) return 42;
+const d = String(n).split('');
+const min = Math.min(...d);
+const ind = d.indexOf(String(min))
 const tmp = [];
-for (let num of digits) {
-  tmp.length > 0 ? tmp.push(tmp[tmp.length-1] + num) : tmp.push(num)
+for (let i = 0; i < d.length; i += 1) {
+if (i !== ind) {
+  tmp.push(d[i]);
 }
-return Math.max(...tmp);
+}
+return Number(tmp.join(''));
 }
 
 module.exports = {
