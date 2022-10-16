@@ -13,9 +13,12 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function getSeason(date) {
 if (!date) return 'Unable to determine the time of year!';
-//console.log(date.constructor.toString());
+
 if (date instanceof Date === false) {
  throw new Error('Invalid date!')
+}
+if (Object.keys(date).length > 0) {
+  throw new Error('Invalid date!')
 }
 
 const month = date.getMonth()
@@ -48,16 +51,3 @@ return 'autumn';
 module.exports = {
   getSeason
 };
-
-const fakeDate = {
-  toString() {
-      return Date.prototype.toString.call(new Date());
-  },
-  [Symbol.toStringTag]: 'Date'
-};
-
-Object.setPrototypeOf(fakeDate, Object.getPrototypeOf(new Date()));
-
-// console.log(getSeason({ John: 'Smith' }));
-// console.log( {} instanceof Date);
-//getSeason('ff')
