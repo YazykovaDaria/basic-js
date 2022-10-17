@@ -20,32 +20,7 @@ const { NotImplementedError } = require('../lib');
  * => 'STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS**STRINGPLUS00PLUS00PLUS'
  *
  */
-function repeater(str, options) {
-  const option = Object.assign(defaultOption, options);
-  const { repeatTimes,
-    separator,
-    addition,
-    additionRepeatTimes,
-    additionSeparator } = option;
-  const normalizeStr = String(str);
-  const nomalizeAddition = String(addition);
-  // if (additionRepeatTimes < 1 ) {
-  //   return `${repeatTimes}${str}${addition}`
-  // }
-  // const afterStr = buildStr(additionRepeatTimes, nomalizeAddition, additionSeparator);
-  // const doubleStr = `${str}${afterStr}`
-  // const newStr = buildStr(repeatTimes, doubleStr, separator);
-  // return newStr;
-  const afterStr = `${nomalizeAddition}${additionSeparator}`
-    .repeat(additionRepeatTimes);
-  normalizeAfterStr = afterStr.slice(0, afterStr.length - additionSeparator.length);
-  const newStr = `${normalizeStr}${normalizeAfterStr}${separator}`
-    .repeat(repeatTimes)
-  return newStr.slice(0, newStr.length - separator.length);
-
-}
-
-const defaultOption = {
+  const defaultOption = {
   repeatTimes: 1,
   separator: '+',
   addition: '',
@@ -53,11 +28,42 @@ const defaultOption = {
   additionSeparator: '|'
 }
 
-// const buildStr = (num, str1, str2) => {
-//   const slicer = str1.length - str2.length;
-//   const newStr = `${str1}${str2}`.repeat(num).slice(0, slicer);
-//   return newStr;
-// }
+const getRepeatStr = (str, separator, repeatNum) => {
+const normalizeStr = typeof str === 'string' ? str : String(str);
+
+  if (repeatNum === 0) return normalizeStr;
+
+  const res = [];
+  for (let i = 0; i < repeatNum; i += 1) {
+    res.push(normalizeStr);
+  }
+  return res.join(separator);
+}
+
+function repeater(str, options) {
+  const optionAll = Object.assign(defaultOption, options);
+  //console.log(optionAll);
+  const { repeatTimes,
+    separator,
+    addition,
+    additionRepeatTimes,
+    additionSeparator } = optionAll;
+
+  const afterStr = getRepeatStr(addition, additionSeparator, additionRepeatTimes);
+
+//console.log(afterStr);
+ const repeatStr = getRepeatStr(str + afterStr,separator, repeatTimes)
+//console.log(repeatStr);
+  return repeatStr;
+}
+
+
+// const objWithSpecificCoercion = {
+//   [Symbol.toPrimitive]: hint => hint !== 'number' ? 'STRING_OR_DEFAULT' : 'NUMBER'
+// };
+
+// console.log(repeater(objWithSpecificCoercion, { repeatTimes: 2, addition: objWithSpecificCoercion }))
+// console.log(repeater('REPEATABLE_STRING', { repeatTimes: 2, addition: 'ADDITION', additionRepeatTimes: 3 }));
 
 module.exports = {
   repeater
