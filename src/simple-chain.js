@@ -45,7 +45,6 @@ return chank;
 
   finishChain() {
     const filt = this.chain
-    //.filter((val) => val !== undefined);
     this.chain = [];
     return filt.join('~~');
   }

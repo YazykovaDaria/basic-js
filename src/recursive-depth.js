@@ -38,9 +38,6 @@ const count = (arr, i) => {
   return i;
 }
 
-// console.log(DepthCalculator.calculateDepth([1, 2, 3, [1], 4, 5, [1]]))
-//([1, 2, 3, [1], 4, 5, [1]]), 2)
-//([1, 2, 3, 4, [1, 2, [1, 2, [[[]]]]], 5, [1, [[[[[[]]]]]]]]), 8)
 module.exports = {
   depthCalculator: new DepthCalculator(),
 };

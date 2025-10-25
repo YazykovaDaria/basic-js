@@ -17,10 +17,6 @@ const { NotImplementedError } = require('../lib');
  * The result should be 9
  */
 function getMatrixElementsSum(matrix) {
-  //this costal;)
-  // if (matrix.length < 2) {
-  //   return 0;
-  // }
   let zeroHeigh = [];
   let sum = 0;
   let columnCount = matrix[0].length;
@@ -28,7 +24,6 @@ function getMatrixElementsSum(matrix) {
   for (let i = 0; i < columnCount; i++) {
     zeroHeigh = [];
     for (let j = 0; j < matrix.length; j++) {
-      //console.log(j - 1, i);
       if (matrix[j][i] === 0 && zeroHeigh.length === 0) {
         zeroHeigh.push(i);
       } else if (matrix[j][i] !== 0 && zeroHeigh.length === 0) {
@@ -39,9 +34,6 @@ function getMatrixElementsSum(matrix) {
   return sum;
 }
 
-// console.log([
-//   [0],
-// ].length)
 module.exports = {
   getMatrixElementsSum
 };

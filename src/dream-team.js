@@ -17,11 +17,9 @@ const { NotImplementedError } = require('../lib');
  *
  */
 function createDreamTeam(members) {
-  //console.log(members);
   if (!Array.isArray(members)) {
     return false;
   }
-  //const membersName =
   return members.filter((str) => typeof str === 'string')
     .map((val) => {
       const normalize = val.trim();
@@ -29,9 +27,6 @@ function createDreamTeam(members) {
     })
     .sort()
     .join('');
-  // return membersName.reduce((acc, vl) => {
-  //   return acc + vl;
-  // }, '')
 }
 
 module.exports = {
