@@ -24,46 +24,33 @@ const { NotImplementedError } = require('../lib');
   repeatTimes: 1,
   separator: '+',
   addition: '',
-  additionRepeatTimes: 0,
+  additionRepeatTimes: 1,
   additionSeparator: '|'
 }
 
-const getRepeatStr = (str, separator, repeatNum) => {
-const normalizeStr = typeof str === 'string' ? str : String(str);
-
-  if (repeatNum === 0) return normalizeStr;
-
-  const res = [];
-  for (let i = 0; i < repeatNum; i += 1) {
-    res.push(normalizeStr);
-  }
-  return res.join(separator);
-}
+const getRepeatStr = (str, separator, repeatNum) => Array(repeatNum).fill(str).join(separator)
 
 function repeater(str, options) {
-  const optionAll = Object.assign(defaultOption, options);
-  //console.log(optionAll);
-  const { repeatTimes,
+  const {
+    repeatTimes,
     separator,
     addition,
     additionRepeatTimes,
-    additionSeparator } = optionAll;
+    additionSeparator
+  } = { ...defaultOption, ...options };
 
-  const afterStr = getRepeatStr(addition, additionSeparator, additionRepeatTimes);
+  const additionStr = String(addition);
+  const repeatedAddition =
+    additionRepeatTimes > 1
+      ? getRepeatStr(additionStr,additionSeparator, additionRepeatTimes)
+      : additionStr;
 
-//console.log(afterStr);
- const repeatStr = getRepeatStr(str + afterStr,separator, repeatTimes)
-//console.log(repeatStr);
-  return repeatStr;
+  const fullStr = `${str}${repeatedAddition}`;
+  return repeatTimes > 1
+    ? getRepeatStr(fullStr, separator, repeatTimes)
+    : fullStr;
 }
 
-
-// const objWithSpecificCoercion = {
-//   [Symbol.toPrimitive]: hint => hint !== 'number' ? 'STRING_OR_DEFAULT' : 'NUMBER'
-// };
-
-// console.log(repeater(objWithSpecificCoercion, { repeatTimes: 2, addition: objWithSpecificCoercion }))
-// console.log(repeater('REPEATABLE_STRING', { repeatTimes: 2, addition: 'ADDITION', additionRepeatTimes: 3 }));
 
 module.exports = {
   repeater

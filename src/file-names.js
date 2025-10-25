@@ -18,6 +18,7 @@ const { NotImplementedError } = require('../lib');
 function renameFiles(/* names */) {
   // Remove line below and write your code here
   throw new NotImplementedError('Not implemented');
+
 }
 
 module.exports = {
