@@ -30,63 +30,58 @@ const { NotImplementedError } = require('../lib');
  *
  */
 
-
-  function repeatString(firstString, secondString) {
-  let resultString = "";
-  let firstStringLength = firstString.length;
-  // const second = 'alphonce '.replace (/[^a-zA-Z]+/g, '');
-  console.log(firstString,secondString);
-  let it = 0;
-  for (let i = 0; i < secondString.length; i++) {
-      if (i % firstStringLength === 0) {
-          it = 0;
-      }
-      resultString += firstString[it];
-      it++;
-      console.log(resultString);
-  return resultString;
-}
-  }
-
-
-const vigenereSquare = [
-  'abcdefghijklmnopqrstuvwxyz',
-  'bcdefghijklmnopqrstuvwxyza',
-  'cdefghijklmnopqrstuvwxyzab',
-  'defghijklmnopqrstuvwxyzabc',
-  'efghijklmnopqrstuvwxyzabcd',
-  'fghijklmnopqrstuvwxyzabcde',
-  'ghijklmnopqrstuvwxyzabcdef',
-  'hijklmnopqrstuvwxyzabcdefg',
-  'ijklmnopqrstuvwxyzabcdefgh',
-  'jklmnopqrstuvwxyzabcdefghi',
-  'klmnopqrstuvwxyzabcdefghij',
-  'lmnopqrstuvwxyzabcdefghijk',
-  'mnopqrstuvwxyzabcdefghijkl',
-  'nopqrstuvwxyzabcdefghijklm',
-  'opqrstuvwxyzabcdefghijklmn',
-  'pqrstuvwxyzabcdefghijklmno',
-  'qrstuvwxyzabcdefghijklmnop',
-  'rstuvwxyzabcdefghijklmnopq',
-  'stuvwxyzabcdefghijklmnopqr',
-  'tuvwxyzabcdefghijklmnopqrs',
-  'uvwxyzabcdefghijklmnopqrst',
-  'vwxyzabcdefghijklmnopqrstu',
-  'wxyzabcdefghijklmnopqrstuv',
-  'xyzabcdefghijklmnopqrstuvw',
-  'yzabcdefghijklmnopqrstuvwx',
-  'zabcdefghijklmnopqrstuvwxy'
-]
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 class VigenereCipheringMachine {
-  encrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  constructor(isDirection = true) {
+    this.isDirection = isDirection;
   }
 
-  decrypt() {
-    // Remove line below and write your code here
-    throw new NotImplementedError('Not implemented');
+  encrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+
+    key = key.toUpperCase();
+    message = message.toUpperCase();
+
+    let result = '';
+    let tmp = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      const current = message[i];
+      if (alphabet.includes(current)) {
+        const indexA = alphabet.indexOf(current);
+        const indexK = alphabet.indexOf(key[tmp % key.length]);
+        result += alphabet[(indexA + indexK) % alphabet.length];
+        tmp += 1;
+      } else {
+        result += current;
+      }
+    }
+
+  return this.isDirection ? result : result.split('').reverse().join('');
+  }
+
+  decrypt(message, key) {
+    if (!message || !key) throw new Error('Incorrect arguments!');
+
+    key = key.toUpperCase();
+    message = message.toUpperCase();
+
+    let result = '';
+    let tmp = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      const current = message[i];
+      if (alphabet.includes(current)) {
+        const indexA = alphabet.indexOf(current);
+        const indexK = alphabet.indexOf(key[tmp % key.length]);
+        result += alphabet[(alphabet.length + indexA - indexK) % alphabet.length];
+        tmp += 1;
+      } else {
+        result += current;
+      }
+    }
+    return this.isDirection ? result : result.split('').reverse().join('');
   }
 }
 
@@ -95,54 +90,3 @@ module.exports = {
   reverseMachine: new VigenereCipheringMachine(false),
   VigenereCipheringMachine,
 };
-
-class Vigenere {
-  constructor(alphabet) {
-      this.alphabet = alphabet;
-      this.square = [];
-  }
-  // Генерируем квадрат Виженера
-  generateSquare() {
-      for (let i = 0; i < this.alphabet.length; i++) {
-          let row = this.alphabet.slice(i);
-          row += this.alphabet.slice(0, i);
-          this.square.push(row);
-      }
-  }
-  getSquare() {
-      return this.square;
-  }
-  encrypt(message, key) {
-      let resultMessage = "";
-      // Дублируем ключ до длины сообщения
-      let newKey = repeatString(key, message);
-      // Генерируем квадрат Виженера
-    this.generateSquare();
-      for (let it = 0; it < message.length; it++) {
-          // Индекс строки раный символу сообщения
-          let i = this.alphabet.indexOf(message[it]);
-          // Индекс колонки раный символу ключа
-          let j = this.alphabet.indexOf(newKey[it]);
-          // Зашифрованный символ равный пересечению индекса строки и колонки
-          resultMessage += this.square[i][j];
-      }
-      return resultMessage;
-  }
-  decrypt(message, key) {
-      let decryptMessage = "";
-      let newKey = repeatString(key, message);
-      this.generateSquare();
-      for (let it = 0; it < message.length; it++) {
-          // Берем символ ключа и ищем индекс строки с данным символом
-          let i = this.alphabet.indexOf(newKey[it]);
-          let j = this.square[i].indexOf(message[it]);
-          decryptMessage += this.alphabet[j];
-      }
-      return decryptMessage;
-  }
-}
-
-//const n = new Vigenere('abcdefghijklmnopqrstuvwxyz')
-//n.generateSquare()
-//console.log(n.decrypt('ICWWQAMKECEIKJVZZTEADGG', 'rollingscopes'));
-//console.log(n.decrypt('hsvdajal', 'behappy'));
